@@ -1,5 +1,5 @@
-#include<NewPing.h>           // For Ultrasonic Sensor         
-#include<AFMotor.h>           //AdaFruit Motor library for Motor
+#include<NewPing.h>                // For Ultrasonic Sensor         
+#include<AFMotor.h>                //AdaFruit Motor library for Motor
 
 #define RIR A3                    // IR sensor on the right - pin A3
 #define LIR A4                    // IR sensor on the left - pin A4
@@ -38,7 +38,8 @@ void loop()
 
   if((RIR_value == 1) && (LIR_value == 1))          //Check if there is no object right next to the robot
   {
-    if((distance > 1) && (distance < 50))          //Check if there is an object(human) at a distance between 1 to 50
+    
+    if((distance > 9) && (distance < 50))          //Check if there is an object(human) at a distance between 9 to 50
     {               
         //Move Forward
         Motor1.setSpeed(130);  
@@ -51,9 +52,22 @@ void loop()
         Motor4.run(FORWARD);   
     }
 
-    else
+    else if((distance > 1) && (distance <= 9))     //Stop at a safe distance
     {
-        //Turn left to search for object at distance between 1 and 50
+        //Stop
+        Motor1.setSpeed(0);    
+        Motor1.run(RELEASE);   
+        Motor2.setSpeed(0);    
+        Motor2.run(RELEASE);   
+        Motor3.setSpeed(0);    
+        Motor3.run(RELEASE);   
+        Motor4.setSpeed(0);    
+        Motor4.run(RELEASE); 
+    }
+
+    else if(distance >= 50)
+    {
+        //Turn left to search for object at distance between 9 and 50
         Motor1.setSpeed(150);  
         Motor1.run(BACKWARD);  
         Motor2.setSpeed(150);  
@@ -67,45 +81,46 @@ void loop()
 
   }
 
-  else if((RIR_value == 0) && (LIR_value == 1))     //If there is an object on the right
+  else if((RIR_value == 0) && (LIR_value == 1))     //If there is an object on the right close to the robot
   {  
       //Turn right                                               
-      Motor1.setSpeed(150);  
+      Motor1.setSpeed(100);  
       Motor1.run(FORWARD);   
-      Motor2.setSpeed(150);  
+      Motor2.setSpeed(100);  
       Motor2.run(FORWARD);   
-      Motor3.setSpeed(150);  
+      Motor3.setSpeed(100);  
       Motor3.run(BACKWARD);  
-      Motor4.setSpeed(150);  
+      Motor4.setSpeed(100);  
       Motor4.run(BACKWARD);  
       delay(150);
   }
 
-  else if((RIR_value == 1) && (LIR_value == 0))     //If there is an object on the left
+  else if((RIR_value == 1) && (LIR_value == 0))     //If there is an object on the left close to the robot
   {    
       //Turn left
-      Motor1.setSpeed(150);  
+      Motor1.setSpeed(100);  
       Motor1.run(BACKWARD);  
-      Motor2.setSpeed(150);  
+      Motor2.setSpeed(100);  
       Motor2.run(BACKWARD);  
-      Motor3.setSpeed(150);  
+      Motor3.setSpeed(100);  
       Motor3.run(FORWARD);   
-      Motor4.setSpeed(150);  
+      Motor4.setSpeed(100);  
       Motor4.run(FORWARD);   
       delay(150);
   }
 
   else if((RIR_value == 0) && (LIR_value == 0))     //If there is an object right in front of the robot
   {                          
-      //Stop
-      Motor1.setSpeed(0);    
-      Motor1.run(RELEASE);   
-      Motor2.setSpeed(0);    
-      Motor2.run(RELEASE);   
-      Motor3.setSpeed(0);    
-      Motor3.run(RELEASE);   
-      Motor4.setSpeed(0);    
-      Motor4.run(RELEASE);  
+      //Go back to a safe distance                                              
+      Motor1.setSpeed(100);  
+      Motor1.run(BACKWARD);   
+      Motor2.setSpeed(100);  
+      Motor2.run(BACKWARD);   
+      Motor3.setSpeed(100);  
+      Motor3.run(BACKWARD);  
+      Motor4.setSpeed(100);  
+      Motor4.run(BACKWARD);  
+      delay(150);
   }
   
 }
