@@ -67,7 +67,7 @@ void loop()
 
     else if(distance >= 50)
     {
-        //Turn left to search for object at distance between 9 and 50
+        //Turn left to search for object at distance between 9 and 50 - Motor run direction may change according to the user's configuration
         Motor1.setSpeed(150);  
         Motor1.run(BACKWARD);  
         Motor2.setSpeed(150);  
@@ -83,7 +83,7 @@ void loop()
 
   else if((RIR_value == 0) && (LIR_value == 1))     //If there is an object on the right close to the robot
   {  
-      //Turn right                                               
+      //Turn right - Motor run direction may change according to the user's configuration                                            
       Motor1.setSpeed(100);  
       Motor1.run(FORWARD);   
       Motor2.setSpeed(100);  
@@ -97,7 +97,7 @@ void loop()
 
   else if((RIR_value == 1) && (LIR_value == 0))     //If there is an object on the left close to the robot
   {    
-      //Turn left
+      //Turn left - Motor run direction may change according to the user's configuration
       Motor1.setSpeed(100);  
       Motor1.run(BACKWARD);  
       Motor2.setSpeed(100);  
